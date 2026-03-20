@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NetworkTool</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="header">
+    <div class="header-left">
+      <h1 class="header-title">NetworkTool</h1>
+      <span class="header-subtitle">Listening on localhost</span>
+    </div>
+    <div class="header-right">
+      <div class="filter-wrap">
+        <svg class="filter-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="filter-input" class="filter-input" placeholder="Filter ports..." spellcheck="false" autocomplete="off">
+      </div>
+      <button id="refresh-btn" class="refresh-btn" title="Refresh now">
+        <svg class="refresh-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="23 4 23 10 17 10"></polyline>
+          <polyline points="1 20 1 14 7 14"></polyline>
+          <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="column-headers">
+    <span class="col col-port">PORT</span>
+    <span class="col col-process">PROCESS</span>
+    <span class="col col-pid">PID</span>
+    <span class="col col-address">ADDRESS</span>
+    <span class="col col-type">TYPE</span>
+    <span class="col col-action"></span>
+  </div>
+
+  <main class="port-list" id="port-list">
+    <!-- Skeleton rows shown on initial load -->
+    <div class="skeleton-row"><span class="sk sk-port"></span><span class="sk sk-process"></span><span class="sk sk-pid"></span><span class="sk sk-addr"></span><span class="sk sk-tag"></span><span class="sk sk-btn"></span></div>
+    <div class="skeleton-row"><span class="sk sk-port"></span><span class="sk sk-process"></span><span class="sk sk-pid"></span><span class="sk sk-addr"></span><span class="sk sk-tag"></span><span class="sk sk-btn"></span></div>
+    <div class="skeleton-row"><span class="sk sk-port"></span><span class="sk sk-process"></span><span class="sk sk-pid"></span><span class="sk sk-addr"></span><span class="sk sk-tag"></span><span class="sk sk-btn"></span></div>
+    <div class="skeleton-row"><span class="sk sk-port"></span><span class="sk sk-process"></span><span class="sk sk-pid"></span><span class="sk sk-addr"></span><span class="sk sk-tag"></span><span class="sk sk-btn"></span></div>
+    <div class="skeleton-row"><span class="sk sk-port"></span><span class="sk sk-process"></span><span class="sk sk-pid"></span><span class="sk sk-addr"></span><span class="sk sk-tag"></span><span class="sk sk-btn"></span></div>
+  </main>
+
+  <!-- Empty state -->
+  <div class="empty-state" id="empty-state" style="display:none;">
+    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+      <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+      <line x1="6" y1="6" x2="6.01" y2="6"></line>
+      <line x1="6" y1="18" x2="6.01" y2="18"></line>
+    </svg>
+    <p class="empty-title">No listening ports found</p>
+    <p class="empty-sub">Ports will appear here when services start listening on localhost</p>
+  </div>
+
+  <!-- Filtered empty state -->
+  <div class="empty-state" id="filter-empty" style="display:none;">
+    <p class="empty-title" id="filter-empty-msg">No ports match ""</p>
+    <button class="clear-filter-btn" id="clear-filter-btn">Clear filter</button>
+  </div>
+
+  <footer class="status-bar">
+    <span id="port-count">—</span>
+    <span class="status-sep">·</span>
+    <span id="last-scan">Last scan: —</span>
+    <span class="status-sep">·</span>
+    <span class="auto-indicator">
+      <span class="auto-dot" id="auto-dot"></span>
+      Auto 3s
+    </span>
+  </footer>
+
+  <div class="toast" id="toast"></div>
+
+  <script src="main.js"></script>
+</body>
+</html>
