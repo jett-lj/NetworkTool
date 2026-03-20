@@ -166,12 +166,6 @@ fn kill_process(pid: u32) -> Result<String, String> {
 pub fn run() {
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![scan_ports, kill_process])
-        .on_window_event(|window, event| {
-            if let tauri::WindowEvent::CloseRequested { .. } = event {
-                // Graceful shutdown: let the app exit cleanly
-                let _ = window.close();
-            }
-        })
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

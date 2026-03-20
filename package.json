@@ -4,8 +4,8 @@
   "description": "Localhost port manager desktop app",
   "scripts": {
     "tauri": "tauri",
-    "dev": "tauri dev",
-    "build": "tauri build"
+    "dev": "set PATH=%PATH%;%USERPROFILE%\\.cargo\\bin&& tauri dev",
+    "build": "set PATH=%PATH%;%USERPROFILE%\\.cargo\\bin&& tauri build"
   },
   "keywords": [],
   "author": "",

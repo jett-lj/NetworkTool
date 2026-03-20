@@ -25,10 +25,12 @@ async function scanPorts() {
   try {
     const entries = await invoke("scan_ports");
     const json = JSON.stringify(entries);
-    if (json === lastJson) return; // no change
-    lastJson = json;
-    currentData = entries;
-    render();
+    const changed = json !== lastJson;
+    if (changed) {
+      lastJson = json;
+      currentData = entries;
+      render();
+    }
     updateStatus();
   } catch (e) {
     console.error("Scan failed:", e);
