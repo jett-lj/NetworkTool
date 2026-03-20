@@ -1,6 +1,9 @@
 use serde::Serialize;
 use std::collections::HashMap;
+use std::os::windows::process::CommandExt;
 use std::process::Command;
+
+const CREATE_NO_WINDOW: u32 = 0x08000000;
 
 #[derive(Debug, Serialize, Clone)]
 pub struct PortEntry {
@@ -71,6 +74,7 @@ fn get_process_names() -> HashMap<u32, String> {
     let mut map = HashMap::new();
     let output = Command::new("tasklist")
         .args(["/FO", "CSV", "/NH"])
+        .creation_flags(CREATE_NO_WINDOW)
         .output();
 
     if let Ok(output) = output {
@@ -98,6 +102,7 @@ fn get_process_names() -> HashMap<u32, String> {
 fn scan_ports() -> Vec<PortEntry> {
     let output = Command::new("netstat")
         .args(["-ano"])
+        .creation_flags(CREATE_NO_WINDOW)
         .output();
 
     let output = match output {
@@ -145,6 +150,7 @@ fn kill_process(pid: u32) -> Result<String, String> {
 
     let output = Command::new("taskkill")
         .args(["/PID", &pid.to_string(), "/F"])
+        .creation_flags(CREATE_NO_WINDOW)
         .output()
         .map_err(|e| format!("Failed to execute taskkill: {}", e))?;
 
